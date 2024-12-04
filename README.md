@@ -15,7 +15,7 @@ Clona el repositorio y configura el entorno de desarrollo:
 
 bash
 git clone (https://github.com/BenjDeveloper/DjangoTypeSense)
-cd tu_proyecto_ecommerce
+cd proyecto
 pip install -r requirements.txt
 
 
