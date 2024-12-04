@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app
+    depends_on:
+      - db
+      - typesense
+    environment:
+      - DATABASE_URL=postgres://user:password@db:5432/ecommerce
+
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ecommerce
+    ports:
+      - "5432:5432"
+
+  typesense:
+    container_name: typesense_server
+    image: typesense/typesense:0.25.0
+    ports:
+      - "8108:8108"
+    command: typesense-server --data-dir /data --api-key=your-secret-key
+    environment:
+      - TYPESENSE_API_KEY=your-secret-key
+    volumes:
+      - typesense_data:/data
+
+volumes:
+  postgres_data:
+  typesense_data:
+
+
+
+
+

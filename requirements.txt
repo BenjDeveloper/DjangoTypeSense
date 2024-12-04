@@ -1,0 +1,7 @@
+Django>=4.0
+psycopg2-binary
+djangorestframework
+typesense
+ipython
+django-extensions
+ipdb
