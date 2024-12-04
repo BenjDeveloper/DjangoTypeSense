@@ -8,12 +8,10 @@ class Command(BaseCommand):
         client = get_typesense_client()
         collections = client.collections.retrieve()
 
-        # Eliminar todas las colecciones existentes
         for collection in collections:
             self.stdout.write(self.style.NOTICE(f'Eliminando colección: {collection["name"]}'))
             client.collections[collection['name']].delete()
 
-        # Confirmar que todas las colecciones han sido eliminadas
         collections = client.collections.retrieve()
         if len(collections) == 0:
             self.stdout.write(self.style.SUCCESS('Todas las colecciones han sido eliminadas correctamente.'))

@@ -5,7 +5,6 @@ class Command(BaseCommand):
     help = 'Carga categorías y productos de ejemplo en la base de datos.'
 
     def handle(self, *args, **kwargs):
-        # Definir las categorías basadas en las secciones principales de Logiscenter
         categories = [
             {"name": "Impresoras", "description": "Impresoras de etiquetas, tarjetas, tickets y más."},
             {"name": "Lectores", "description": "Lectores de códigos de barras y RFID."},
@@ -16,7 +15,6 @@ class Command(BaseCommand):
             {"name": "Software", "description": "Aplicaciones para diseño y gestión de códigos de barras y más."},
         ]
 
-        # Crear las categorías en la base de datos
         created_categories = {}
         for category_data in categories:
             category, _ = Category.objects.get_or_create(**category_data)
@@ -24,7 +22,6 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("Categorías creadas exitosamente."))
 
-        # Crear productos de ejemplo para cada categoría
         products = [
             # Productos para la categoría "Impresoras"
             {"name": "Impresora de Etiquetas Zebra ZD421", "description": "Impresora de etiquetas de alto rendimiento.", "price": 350.00, "sku": "IMP-ZD421", "brand": "Zebra", "category": created_categories["Impresoras"]},

@@ -7,10 +7,8 @@ class Command(BaseCommand):
     help = 'Indexa todos los productos en Typesense'
 
     def handle(self, *args, **kwargs):
-        # Obtener todos los productos de la base de datos
         products = Product.objects.all()
 
-        # Indexar los productos en Typesense
         for product in products:
             try:
                 index_product_in_typesense(product)

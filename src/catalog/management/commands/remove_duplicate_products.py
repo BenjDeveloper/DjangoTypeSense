@@ -6,7 +6,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         try:
-            # Paso 1: Obtener todos los productos de la colección de Typesense
             search_parameters = {
                 'q': '*',
                 'query_by': 'name,description,brand,category,sku',
@@ -18,26 +17,23 @@ class Command(BaseCommand):
             all_products = results['hits']
             total_pages = results['found'] // 250 + (1 if results['found'] % 250 > 0 else 0)
 
-            # Obtener todos los productos si hay paginación
             for page in range(2, total_pages + 1):
                 search_parameters['page'] = page
                 next_page_results = client.collections['products'].documents.search(search_parameters)
                 all_products.extend(next_page_results['hits'])
 
-            # Paso 2: Identificar duplicados
             unique_products = {}
             duplicates = []
 
             for hit in all_products:
                 product = hit['document']
-                identifier = (product['name'], product['sku'])  # Se usa 'name' y 'sku' como identificador único
+                identifier = (product['name'], product['sku'])
 
                 if identifier in unique_products:
                     duplicates.append(product['id'])
                 else:
                     unique_products[identifier] = product['id']
 
-            # Paso 3: Eliminar duplicados
             if duplicates:
                 self.stdout.write(self.style.WARNING(f'Encontrados {len(duplicates)} productos duplicados. Eliminando...'))
                 for duplicate_id in duplicates:
