@@ -78,3 +78,8 @@ Tambien se puede probar por terminal el fltrado por medio del uso del comando pa
  - docker exec -it django_app python manage.py test_all_typesense --query="Impresoras"
  - docker exec -it django_app python manage.py test_all_typesense --query="Impr"
  - docker exec -it django_app python manage.py test_all_typesense --query=""
+
+TEST - ADMIN - Productos
+
+![image](https://github.com/user-attachments/assets/080332d1-dbbf-4d9b-aa19-080cc8fdcee3)
+
